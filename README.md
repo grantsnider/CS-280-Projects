@@ -5,7 +5,7 @@
 
 This is the starter package for the Holy Cross College CS 280 Data Structures course.
 
-## Folder Structure
+## Folder Structure 
 
 Any Java workspace contains the following folders:
 - `src`: contains your source code in `.java` files. Normally, the files in this folder are the only ones you ever need to modify manually.
