@@ -1,0 +1,2 @@
+git add path/to/file.java
+git commit -ea "Imperative message describiing a change"
