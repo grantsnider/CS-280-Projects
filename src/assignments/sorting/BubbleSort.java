@@ -12,7 +12,7 @@ public class BubbleSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
      * Post-condition: array is sorted in ascending order
      * 
      * @param array an array of integers
-     * @return a casual description
+     * 
      * 
      * Fixed the public section below to now incorporate the generalized SortingAlgorithm.
      */
