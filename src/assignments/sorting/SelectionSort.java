@@ -2,6 +2,8 @@ package assignments.sorting;
 
 /**
 *Putting out the smallest element one-by-one.
+*
+*@param <T> the element type being sorted
 */
 public class SelectionSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
     
