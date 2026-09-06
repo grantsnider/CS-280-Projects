@@ -1,7 +1,9 @@
 package assignments.sorting;
 
 /**
-*Putting elements one-by-one into a gauranteed-sorted list.
+* InsertionSort builds a sorted position of the array one element at a time.
+*
+* @param <T> the element type being sorted
 */
 public class InsertionSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
     
@@ -10,17 +12,17 @@ public class InsertionSort<T extends Comparable<T>> extends SortingAlgorithm<T> 
      * 
      * Post-condition: array is sorted in ascending order.
      * 
-     * @param array an array of integers.
-     * 
+     * @param array an array of comparable elements to be sorted.
      * InsertionSort is generalized.
      */
 
     public InsertionSort() {}
     /**
      * 
-     * @see assignments.sorting.SortingAlgorithm#sort(java.lang.Object[])
      * Keeps the left side to be sorted.
      * Each element shifts larger ones to the right until its correctly placed.
+     * @see assignments.sorting.SortingAlgorithm#sort(java.lang.Object[])
+     * 
      */
     public void sort(T[] array) {
         for (int i = 1; i < array.length; i++) {
@@ -45,23 +47,6 @@ public class InsertionSort<T extends Comparable<T>> extends SortingAlgorithm<T> 
     public static void main(String[] args) {
         SortingAlgorithm.validate(new InsertionSort<Integer>());
         System.out.println("InsertionSort has passed all tests.");
-
-        // Fill an array with random numbers.
-        int N = 4812;
-        Integer[] array = new Integer[N];
-        for (int i =0; i < array.length; i ++) {
-            array[i] = (int)(N*Math.random());
-        }
-
-        // Measuring runtime.
-        SortingAlgorithm<Integer> sorter = new InsertionSort<Integer>();
-        long start = System.nanoTime();
-        sorter.sort(array);
-        long end = System.nanoTime();
-        double duration = (end - start)/(1e9);
-
-        System.out.println("Array size: "+N);
-        System.out.println("Total duration: "+duration);
 
     }
 }
