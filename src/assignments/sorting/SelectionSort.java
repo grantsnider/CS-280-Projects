@@ -1,9 +1,9 @@
 package assignments.sorting;
 
 /**
-*Putting out the smallest element one-by-one.
+* SelectionSort<T> repeatedly selects smallest remaining element to put into the correct position.
 *
-*@param <T> the element type being sorted
+* @param <T> the element type being sorted
 */
 public class SelectionSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
     
@@ -12,12 +12,16 @@ public class SelectionSort<T extends Comparable<T>> extends SortingAlgorithm<T> 
      * 
      * Post-condition: array is sorted in ascending order.
      * 
-     * @param array an array of integers.
-     * 
      * SelectionSort is generalized.
      */
 
     public SelectionSort() {}
+
+    /**    (non-Javadoc)
+     * @param array an array of integers.
+     * @see assignments.sorting.SortingAlgorithm#sort(java.lang.Comparable[])
+     */
+    @Override
     public void sort(T[] array) {
         /**
          * Algorithm scans length of the portion to find minimum element.
@@ -54,23 +58,6 @@ public class SelectionSort<T extends Comparable<T>> extends SortingAlgorithm<T> 
     public static void main(String[] args) {
         SortingAlgorithm.validate(new SelectionSort<Integer>());
         System.out.println("SelectionSort has passed all tests.");
-
-        // Fill an array with random numbers.
-        int N = 4812;
-        Integer[] array = new Integer[N];
-        for (int i =0; i < array.length; i ++) {
-            array[i] = (int)(N*Math.random());
-        }
-
-        // Measuring runtime.
-        SortingAlgorithm<Integer> sorter = new SelectionSort<Integer>();
-        long start = System.nanoTime();
-        sorter.sort(array);
-        long end = System.nanoTime();
-        double duration = (end - start)/(1e9);
-
-        System.out.println("Array size: "+N);
-        System.out.println("Total duration: "+duration);
 
     }
 

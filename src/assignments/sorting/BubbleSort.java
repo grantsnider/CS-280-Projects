@@ -1,21 +1,27 @@
 package assignments.sorting;
 
 /**
- * Swap adjacent elements over and over until the whole array is sorted.
+ * BubbleSort<T> repeatedly comapres adjacent elements and swaps them when they are out of order.
+ * 
+ * @param <T> the element type being sorted
  */
 public class BubbleSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
     
     /**
      * Sort an array in-place using bubble sort.
      * 
-     * 
+     
      * Post-condition: array is sorted in ascending order
-     * 
-     * @param array an array of integers
-     * 
      * 
      * Fixed the public section below to now incorporate the generalized SortingAlgorithm.
      */
+    public BubbleSort() {}
+
+    /**    (non-Javadoc)
+     * @param array the array to sort
+     * @see assignments.sorting.SortingAlgorithm#sort(java.lang.Comparable[])
+     */
+
     public void sort(T[] array) {
         for (int k = array.length; k >= 2; k --) {   // k is the length of the sub-array we are looping through in the inner loop
             for (int i = 0; i < k-1; i ++) { // go up to k-1 because we don't need to comapre the last index against its neighbor
