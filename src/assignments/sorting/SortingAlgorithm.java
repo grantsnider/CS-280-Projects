@@ -2,26 +2,25 @@ package assignments.sorting;
 
 import java.util.Arrays;
 
-/**  Superclass to ensure all sorting algorithms operate in a consistent manner.
- 
- We use "interfaces" for data structures, but we use this "abstract class" for sorting algorithms.
- The chief differences are that a class can "implement" any number of interfaces but only "extend" one class,
-  and that abstract classes are allowed to implement default behavior.
- We take advantage of this fact to implement two versions of every sort:
-  an "in-place" version called `sort` which modifies the input array, and
-  an "out-of-place" version called `sorted` which constructs a new array.
- The subclasses you create will only need to override the "in-place" version.
- 
- To create a class implementing your own sorting algorithm,
- 1. Create a new class file in your "`sorting`" package. E.g. `BubbleSort.java`.
- 2. Extend this class in your class definition. E.g. "`class BubbleSort extends SortingAlgorithm`"
- 3. Implement the "`sort`" method.
- 4. Write a main function in your class file which, at minimum, calls the "`validate`" method.
-*/
-public abstract class SortingAlgorithm<T> {
+/// Superclass to ensure all sorting algorithms operate in a consistent manner.
+/// 
+/// We use "interfaces" for data structures, but we use this "abstract class" for sorting algorithms.
+/// The chief differences are that a class can "implement" any number of interfaces but only "extend" one class,
+///  and that abstract classes are allowed to implement default behavior.
+/// We take advantage of this fact to implement two versions of every sort:
+///  an "in-place" version called `sort` which modifies the input array, and
+///  an "out-of-place" version called `sorted` which constructs a new array.
+/// The subclasses you create will only need to override the "in-place" version.
+/// 
+/// To create a class implementing your own sorting algorithm,
+/// 1. Create a new class file in your "`sorting`" package. E.g. `BubbleSort.java`.
+/// 2. Extend this class in your class definition. E.g. "`class BubbleSort extends SortingAlgorithm`"
+/// 3. Implement the "`sort`" method.
+/// 4. Write a main function in your class file which, at minimum, calls the "`validate`" method. E.g. `SortingAlgorithm.validate(new BubbleSort())`)
+/// 
+/// @param <T> the type of object to be sorted. Must be ordinal.
+public abstract class SortingAlgorithm<T extends Comparable<T>> {
     /**
-     * Changed the Sorting Algorithm to now be generalized.
-     * 
      * Sort an array in-place.
      * 
      * Post-condition: `array` is sorted in ascending order.

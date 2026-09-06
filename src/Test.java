@@ -28,6 +28,9 @@ public class Test {
 
     private static boolean runTests(String[] args) {
         // Test sorting algorithms.
+        assignments.sorting.BubbleSort.main(args);
+        assignments.sorting.InsertionSort.main(args);
+        assignments.sorting.SelectionSort.main(args);
         /* Call additional main routines here as you create new sorting algorithms. */
     
         // Test data structures.
