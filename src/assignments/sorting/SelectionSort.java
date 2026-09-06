@@ -18,14 +18,11 @@ public class SelectionSort<T extends Comparable<T>> extends SortingAlgorithm<T> 
     public SelectionSort() {}
 
     /**    (non-Javadoc)
-     * @param array an array of integers.
+     * Algorithms scans length of the portion to find the minimum element.
+     * @param array an array of comparable elements to be sorted
      * @see assignments.sorting.SortingAlgorithm#sort(java.lang.Comparable[])
      */
-    @Override
     public void sort(T[] array) {
-        /**
-         * Algorithm scans length of the portion to find minimum element.
-         */
         for (int i = 0; i < array.length - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < array.length; j++) {
