@@ -1,26 +1,19 @@
 package assignments.sorting;
 
 /**
-* InsertionSort builds a sorted position of the array one element at a time.
+* InsertionSort{@code <T>} builds a sorted position of the array one element at a time.
 *
 * @param <T> the element type being sorted
 */
 public class InsertionSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
-    
-    /**
-     * Sort an array into two groups using InsertionSort.
-     * 
-     * Post-condition: array is sorted in ascending order.
-     * 
-     * @param array an array of comparable elements to be sorted.
-     * InsertionSort is generalized.
-     */
 
     public InsertionSort() {}
     /**
      * 
      * Keeps the left side to be sorted.
      * Each element shifts larger ones to the right until its correctly placed.
+     * 
+     * @param array an array of comparable elements to be sorted.
      * @see assignments.sorting.SortingAlgorithm#sort(java.lang.Object[])
      * 
      */
