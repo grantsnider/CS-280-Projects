@@ -1,18 +1,14 @@
 package assignments.sorting;
 
 /**
-* SelectionSort<T> repeatedly selects smallest remaining element to put into the correct position.
+* SelectionSort{@code <T>} repeatedly selects smallest remaining element to put into the correct position.
 *
 * @param <T> the element type being sorted
 */
 public class SelectionSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
-    
+
     /**
-     * Sort an array smallest element at a time using SelectionSort.
-     * 
-     * Post-condition: array is sorted in ascending order.
-     * 
-     * SelectionSort is generalized.
+     * Construct an SelectionSort instance.
      */
 
     public SelectionSort() {}

@@ -1,7 +1,7 @@
 package assignments.sorting;
 
 /**
- * BubbleSort<T> repeatedly comapres adjacent elements and swaps them when they are out of order.
+ * BubbleSort{@code <T>} repeatedly compares adjacent elements and swaps them when they are out of order.
  * 
  * @param <T> the element type being sorted
  */
@@ -10,11 +10,11 @@ public class BubbleSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
     /**
      * Sort an array in-place using bubble sort.
      * 
-     
      * Post-condition: array is sorted in ascending order
      * 
      * Fixed the public section below to now incorporate the generalized SortingAlgorithm.
      */
+
     public BubbleSort() {}
 
     /**    (non-Javadoc)

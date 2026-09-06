@@ -7,14 +7,19 @@ package assignments.sorting;
 */
 public class InsertionSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
 
+    /**
+     * Construct an InsertionSort instance.
+     */
+    
     public InsertionSort() {}
+
     /**
      * 
      * Keeps the left side to be sorted.
      * Each element shifts larger ones to the right until its correctly placed.
      * 
      * @param array an array of comparable elements to be sorted.
-     * @see assignments.sorting.SortingAlgorithm#sort(java.lang.Object[])
+     * @see assignments.sorting.SortingAlgorithm#sort(java.lang.Comparable[])
      * 
      */
     public void sort(T[] array) {
