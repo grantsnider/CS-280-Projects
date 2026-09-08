@@ -35,6 +35,7 @@ public class Test {
     
         // Test data structures.
        assignments.datastructures.KeyValuePair.main(args);
+       assignments.datastructures.Vector.main(args);
         /* Call additional main routines as you create new data strutures. */
 
         return true;
