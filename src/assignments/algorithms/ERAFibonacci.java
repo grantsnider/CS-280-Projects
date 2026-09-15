@@ -1,9 +1,14 @@
 package assignments.algorithms;
 
+/**
+ * Empiricial Runtime Analysis of several Fibonacci implementations.
+ * 
+ * Compared Dynamic programming, Recursive, and Binet approaches.
+ */
 public class ERAFibonacci {
 
     /**
-    * Computes the nth Fibonacci number using dyanmic programming.
+    * Compute the nth Fibonacci number using dyanmic programming.
     * 
     * @param n the Fibonacci index
     * @return the nth Fibonacci number
@@ -38,10 +43,10 @@ public class ERAFibonacci {
     }
 
     /**
-     * Computes Binets formula
+     * Computes Binets formula using the nth Fibonacci number.
      * 
-     * @param n the Binet index
-     * @return the results.
+     * @param n the Fibonacci index
+     * @return the nth Fibonacci number.
      */
     public static long fibBinet(int n) {
         double phi = (1 + Math.sqrt(5)) / 2.0;
@@ -52,7 +57,9 @@ public class ERAFibonacci {
     }
 
     /**
-     * Times Fibonacci computes.
+     * Times Fibonacci computes for runtime analysis.
+     * 
+     * @param args command-line arguments.
      */
     public static void main(String[] args) {
         System.out.println("N\tTime");
