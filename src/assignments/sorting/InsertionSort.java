@@ -10,44 +10,34 @@ public class InsertionSort<T extends Comparable<T>> extends SortingAlgorithm<T> 
     /**
      * Construct an InsertionSort instance.
      */
-    
     public InsertionSort() {}
 
     /**
-     * 
-     * Keeps the left side to be sorted.
-     * Each element shifts larger ones to the right until its correctly placed.
+     * The left portion of the array is maintained in sorted order. Each element is insrted into the proper position by shifting the larger element to the right.
      * 
      * @param array an array of comparable elements to be sorted.
      * @see assignments.sorting.SortingAlgorithm#sort(java.lang.Comparable[])
-     * 
      */
     public void sort(T[] array) {
         for (int i = 1; i < array.length; i++) {
-            T Key = array[i];
+            T key = array[i];
             int j = i - 1;
 
-
-            while (j>= 0 && array[j].compareTo(Key) > 0) {
+            while (j>= 0 && array[j].compareTo(key) > 0) {
                 array[j + 1] = array[j];
                 j--;
             }
-            array[j + 1] = Key;
-
+            array[j + 1] = key;
         }
-
     }
 
     /** 
      * Run validation tests.
+     * 
      * @param args command-line args
      */
     public static void main(String[] args) {
         SortingAlgorithm.validate(new InsertionSort<Integer>());
         System.out.println("InsertionSort has passed all tests.");
-
     }
 }
-
-//java -cp lib/* -ea src/assignments/sorting/InsertionSort.java
-//Quadratic algorithm
