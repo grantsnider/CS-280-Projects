@@ -63,7 +63,7 @@ public class ERAFibonacci {
      */
     public static void main(String[] args) {
         System.out.println("N\tTime");
-        for (int n = 1000; n <= 100000; n += 1000) {
+        for (int n = 1; n <= 100000; n += 100) {
             long start = System.nanoTime();
             fibonacci(n);
             long end = System.nanoTime();
