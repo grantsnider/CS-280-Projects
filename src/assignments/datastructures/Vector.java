@@ -4,6 +4,8 @@ import java.util.Iterator;
 
 import adt.List;
 
+import adt.Stack;
+
 /// An extensible list backed by an array buffer.
 /// 
 /// The idea here is to store your data in an array larger than it has to be.
@@ -15,7 +17,22 @@ import adt.List;
 /// This is a very expensive operation, so you want to make sure it occurs very infrequently.
 /// 
 /// @param <T> the type of each element
-public class Vector<T> implements List<T>, Iterable<T> {
+public class Vector<T> implements List<T>, Iterable<T>, Stack<T> {
+    public boolean isEmpty() {
+        return this.size == 0;
+    }
+    public void push(T value) {
+        insert(this.size, value);
+    }
+    public T pop() {
+        assert !isEmpty();
+        return delete(this.size - 1);
+    }
+    public T peek() {
+        assert !isEmpty();
+        return this.array[this.size - 1];
+    }
+    
     /** The initial amount of buffer space in a newly-created vector. */
     public static final int INITIAL_BUFFER_SIZE = 10;
     private T[] array;
@@ -137,6 +154,8 @@ public class Vector<T> implements List<T>, Iterable<T> {
      */
     public static void main(String[] args) {
         List.validate(new Vector<>());
+        
+        Stack.validate(new Vector<>());
 
         //Test iterator.
         Vector<Integer> vector = new Vector<>();

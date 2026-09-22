@@ -4,6 +4,8 @@ import java.util.Iterator;
 
 import adt.List;
 
+import adt.Stack;
+
 /// An extensible list backed by a chain of nodes.
 /// 
 /// The idea here is to wrap each datum in a larger structure, a *node*,
@@ -16,7 +18,22 @@ import adt.List;
 ///  one must first traverse through the chain of nodes from the beginning of the list.
 /// 
 /// @param <T> the type of each element
-public class LinkedList<T> implements List<T>, Iterable<T> {
+public class LinkedList<T> implements List<T>, Iterable<T>, Stack<T> {
+    public boolean isEmpty() {
+        return this.size == 0;
+    }
+    public void push(T value) {
+        insert(0, value);
+    }
+    public T pop() {
+        assert !isEmpty();
+        return delete(0);
+    }
+    public T peek() {
+        assert !isEmpty();
+        return this.head.data;
+    }
+    
     private Node head;
     private int size;
 
@@ -147,6 +164,8 @@ public class LinkedList<T> implements List<T>, Iterable<T> {
      * @param args command-line args
      */
     public static void main(String[] args) {
+        Stack.validate(new LinkedList<>());
+       
         List.validate(new LinkedList<>());
 
         //Test iterator.

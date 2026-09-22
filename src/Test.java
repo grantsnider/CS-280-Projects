@@ -37,6 +37,7 @@ public class Test {
        assignments.datastructures.KeyValuePair.main(args);
        assignments.datastructures.Vector.main(args);
        assignments.datastructures.LinkedList.main(args);
+       assignments.datastructures.CircularLinkedList.main(args);
         /* Call additional main routines as you create new data strutures. */
 
         return true;
