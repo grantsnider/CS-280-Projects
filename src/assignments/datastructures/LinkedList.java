@@ -141,9 +141,25 @@ public class LinkedList<T> implements List<T>, Iterable<T>, Stack<T> {
         return removed;
     }
 
-    /**
-     * An encapsulation of a value with a pointer, allowing us to chain to another value.
+    /**    (non-Javadoc)
+     * Create an iterator over this list's contents.
+     * 
+     * @return an iterator that goes through the list in order.
      */
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private Node cursor = head;
+            public boolean hasNext() {return cursor != null;}
+            public T next() {
+                T value = cursor.data;
+                cursor = cursor.link;
+                return value;}
+        };
+    }
+
+    /**
+    * An encapsulation of a value with a pointer, allowing us to chain to another value.
+    */
     private class Node {
         T data;
         Node link;
@@ -177,16 +193,4 @@ public class LinkedList<T> implements List<T>, Iterable<T>, Stack<T> {
 
         System.out.println("LinkedList passes all tests.");
     }
-
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
-            private Node cursor = head;
-            public boolean hasNext() {return cursor != null;}
-            public T next() {
-                T value = cursor.data;
-                cursor = cursor.link;
-                return value;}
-        };
-    }
 }
-

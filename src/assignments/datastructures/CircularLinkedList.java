@@ -6,13 +6,30 @@ import org.w3c.dom.Node;
 
 import adt.List;
 
+import adt.Queue;
+
 /**
  * A circular linked implementation of the list interface.
  * The last node links to the first, forming a circle. The list maintains a reference of the tail and the size.
  * 
  * @param <T> the element type stored in the list.
  */
-public class CircularLinkedList<T> implements List<T>, Iterable<T> {
+public class CircularLinkedList<T> implements List<T>, Iterable<T>, Queue<T> {
+    public boolean isEmpty() {
+        return this.size == 0;
+    }
+    public void enqueue(T value) {
+        insert(size, value);
+    }
+    public T dequeue() {
+        assert !isEmpty();
+        return delete(0);
+    }
+    public T peek() {
+        assert !isEmpty();
+        return tail.link.data;
+    }
+    
     private Node tail;
     private int size;
 
@@ -188,6 +205,8 @@ public class CircularLinkedList<T> implements List<T>, Iterable<T> {
     */
     public static void main(String[] args) {
         List.validate(new CircularLinkedList<>());
+        Queue.validate(new CircularLinkedList<>());
+
         CircularLinkedList<Integer> list = new CircularLinkedList<>();
         for (int i = 0; i < 5; i++)
             list.insert(0, i);
