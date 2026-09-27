@@ -16,10 +16,10 @@ public class ERAPrepending {
     public static void testVector() {
         System.out.println("Vector");
         System.out.println("N\tTime");
-        for (int n = 100; n <= 100000; n *= 10) {
+        for (int n = 100; n <= 10000000; n *= 10) {
             Vector<Integer> vector = new Vector<>();
             for (int i = 0; i < n; i++) {
-                vector.insert(0, 0);
+                vector.insert(vector.length(), 0);
             }
 
             long start = System.nanoTime();
@@ -36,7 +36,7 @@ public class ERAPrepending {
     public static void testLinkedList() {
         System.out.println("LinkedList");
         System.out.println("N\tTime");
-        for (int n = 100; n <= 100000000; n *= 10) {
+        for (int n = 100; n <= 1000000; n *= 10) {
             LinkedList<Integer> linkedList = new LinkedList<>();
             for (int i = 0; i < n; i++) {
                 linkedList.insert(0, 0);
@@ -56,7 +56,7 @@ public class ERAPrepending {
     public static void testCircularLinkedList() {
         System.out.println("CircularLinkedList");
         System.out.println("N\tTime");
-        for (int n = 100; n <= 100000000; n *= 10) {
+        for (int n = 100; n <= 1000000; n *= 10) {
             CircularLinkedList<Integer> circularLinkedList = new CircularLinkedList<>();
             for (int i = 0; i < n; i++) {
                 circularLinkedList.insert(0, 0);
@@ -81,3 +81,5 @@ public class ERAPrepending {
         testCircularLinkedList();
     }
 }
+
+//java -cp lib/* -ea src/assignments/algorithms/ERAPrepending.java
