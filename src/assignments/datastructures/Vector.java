@@ -149,6 +149,19 @@ public class Vector<T> implements List<T>, Iterable<T>, Stack<T> {
     }
 
     /**
+     * Create an iterator that goes throught the contents of the list.
+     * 
+     * @return an iterator to travel through the list.
+     */
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private int index = 0;
+            public boolean hasNext() {return index < size;}
+            public T next() {return array[index++];}
+        };
+    }
+
+    /**
      * Run validation tests.
      * @param args command-line args
      */
@@ -165,14 +178,6 @@ public class Vector<T> implements List<T>, Iterable<T>, Stack<T> {
         assert !iter.hasNext();
 
         System.out.println("Vector passes all tests.");
-    }
-
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
-            private int index = 0;
-            public boolean hasNext() {return index < size;}
-            public T next() {return array[index++];}
-        };
     }
 }
 

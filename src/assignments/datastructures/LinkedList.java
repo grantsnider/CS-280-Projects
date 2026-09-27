@@ -141,7 +141,7 @@ public class LinkedList<T> implements List<T>, Iterable<T>, Stack<T> {
         return removed;
     }
 
-    /**    (non-Javadoc)
+    /**
      * Create an iterator over this list's contents.
      * 
      * @return an iterator that goes through the list in order.
