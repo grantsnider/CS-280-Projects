@@ -31,6 +31,8 @@ public class Test {
         assignments.sorting.BubbleSort.main(args);
         assignments.sorting.InsertionSort.main(args);
         assignments.sorting.SelectionSort.main(args);
+        assignments.sorting.QuickSort.main(args);
+        assignments.sorting.MergeSort.main(args);
         /* Call additional main routines here as you create new sorting algorithms. */
     
         // Test data structures.
