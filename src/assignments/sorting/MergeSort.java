@@ -1,42 +1,36 @@
 package assignments.sorting;
 
+import java.util.Arrays;
+
 /**
  * MergeSort splits data into subgroups and recursively merges them.
  */
-public class MergeSort extends SortingAlgorithm<Integer> {
+public class MergeSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
     
     /**
      * Sorts the array.
      * @param array array to sort.
      */
-    public void sort(Integer[] array) {
-        Integer [] sorted = mySort(array);
-        for (int i = 0; i < array.length; i++) {
-            array[i] = sorted[i];
-        }
+    public void sort(T[] array) {
+        T[] work = Arrays.copyOf(array, array.length);
+        mySort(array, work, 0, array.length - 1);
     }
 
     /**
      * Recursively sorts an array.
      * @param array the array thats sorted.
-     * @return sorted copy of array.
+     * @param work array for merging.
+     * @param left left boundary.
+     * @param right right boundary.
      */
-    private Integer[] mySort(Integer[] array) {
-        if (array.length <= 1) {
-            return array;
+    private void mySort(T[] array, T[] work, int left, int right) {
+        if (left >= right) {
+            return;
         }
-        int mid = array.length / 2;
-        Integer [] left = new Integer[mid];
-        Integer [] right = new Integer[array.length - mid];
-        for (int i = 0; i < mid; i++) {
-            left[i] = array[i];
-        }
-        for (int i = mid; i < array.length; i++) {
-            right[i - mid] = array[i];
-        }
-        left = mySort(left);
-        right = mySort(right);
-        return merge(left, right);
+        int mid = (left + right) / 2;
+        mySort(array, work, left, mid);
+        mySort(array, work, mid + 1, right);
+        merge(array, work, left, mid, right);
     }
 
     /**
@@ -45,27 +39,24 @@ public class MergeSort extends SortingAlgorithm<Integer> {
      * @param right second array sorted.
      * @return merged sorted array.
      */
-    private Integer[] merge(Integer[] left, Integer[] right) {
-        Integer[] merged = new Integer[left.length + right.length];
-        int l = 0;
-        int r = 0;
-        int m = 0;
-        while (l < left.length && r < right.length) {
-            if (left[l] <= right[r]) {
-                merged[m++] = left[l++];
+    private void merge(T[] array, T[] work, int left, int mid, int right) {
+        int l = left;
+        int m = mid + 1;
+        int r = left;
+        while (l <= mid && r <= right) {
+            if (work[l].compareTo(work[r]) <= 0) {
+                array[m++] = work[l++];
             }
             else {
-                merged[m++] = right[r++];
+                array[m++] = work[r++];
             }
         }
-        while (l < left.length) {
-            merged[m++] = left[l++];
+        while (l <= mid) {
+            array[m++] = work[l++];
         }
-        while (r < right.length) {
-            merged[m++] = right[r++];
+        while (r <= right) {
+            array[m++] = work[r++];
         }
-
-        return merged;
     }
 
     /**
@@ -73,7 +64,7 @@ public class MergeSort extends SortingAlgorithm<Integer> {
      * @param args command-line args.
      */
     public static void main(String[] args) {
-        SortingAlgorithm.validate(new MergeSort());
+        SortingAlgorithm.validate(new MergeSort<Integer>());
 
         System.out.println("MergeSort passes all tests.");
     }
