@@ -40,9 +40,12 @@ public class MergeSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
      * @return merged sorted array.
      */
     private void merge(T[] array, T[] work, int left, int mid, int right) {
+        for (int i = left; i <= right; i++) {
+            work[i] = array[i];
+        }
         int l = left;
-        int m = mid + 1;
-        int r = left;
+        int r = mid + 1;
+        int m = left;
         while (l <= mid && r <= right) {
             if (work[l].compareTo(work[r]) <= 0) {
                 array[m++] = work[l++];
