@@ -3,7 +3,7 @@ package assignments.sorting;
 /**
  * Quicksort sorts values relative to a pivot.
  */
-public class QuickSort extends SortingAlgorithm<Integer> {
+public class QuickSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
     
     /**
      * Intialize the QuickSort.
@@ -14,58 +14,50 @@ public class QuickSort extends SortingAlgorithm<Integer> {
      * Sorts the array.
      * @param array the array to sort.
      */
-    public void sort(Integer[] array) {
-        Integer[] sorted = mySort(array);
-        for (int i = 0; i < array.length; i++) {
-            array[i] = sorted[i];
+    public void sort(T[] array) {
+        if (array == null || array.length <= 1) {
+            return;
         }
+        quickSort(array, 0, array.length - 1);
     }
 
     /**
      * Recursively sorts the array.
      * @param array the array to sort.
-     * @return a sorted copy of the array.
+     * @param low lowest index.
+     * @param high highest index.
      */
-    private Integer[] mySort(Integer[] array) {
-        if (array.length <= 1) {
-            return array;
+    private void quickSort(T[] array, int low, int high) {
+        if (low >= high) {
+            return;
         }
-        Integer pivot = array[0];
-        int leftC = 0;
-        int rightC = 0;
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] <= pivot) {
-                leftC++;
+        int pivotIndex = partition(array, low, high);
+        quickSort(array, low, pivotIndex - 1);
+        quickSort(array, pivotIndex + 1, high);
+    }
+
+    /**
+     * Partitions the array around the pivot.
+     * @param array array being sorted.
+     * @param low lowest index.
+     * @param high highest index.
+     * @return final pivot location.
+     */
+    private int partition(T[] array, int low, int high) {
+        T pivot = array[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (array[j].compareTo(pivot) <= 0) {
+                i++;
+                T temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
             }
-            else {
-                rightC++;
-            }
         }
-        Integer[] left = new Integer[leftC];
-        Integer[] right = new Integer[rightC];
-        int l = 0;
-        int r = 0;
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] <= pivot) {
-                left[l++] = array[i];
-            }
-            else {
-                right[r++] = array[i];
-            }
-        }
-        left = mySort(left);
-        right = mySort(right);
-        Integer[] sorted = new Integer[array.length];
-        int index = 0;
-        for (Integer x : left) {
-            sorted[index++] = x;
-        }
-        sorted[index++] = pivot;
-        for (Integer x : right) {
-            sorted[index++] = x;
-        }
-        
-        return sorted;
+        T temp = array[i + 1];
+        array[i + 1] = array[high];
+        array[high] = temp;
+        return i + 1;
     }
 
     /**
@@ -74,8 +66,7 @@ public class QuickSort extends SortingAlgorithm<Integer> {
      * @param args
      */
     public static void main(String[] args) {
-        SortingAlgorithm.validate(new QuickSort());
-
+        SortingAlgorithm.validate(new QuickSort<Integer>());
         System.out.println("QuicksSort passes all tests.");
     }
 }
