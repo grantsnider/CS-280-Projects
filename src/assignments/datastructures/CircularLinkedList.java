@@ -2,8 +2,6 @@ package assignments.datastructures;
 
 import java.util.Iterator;
 
-import org.w3c.dom.Node;
-
 import adt.List;
 
 import adt.Queue;
@@ -15,16 +13,32 @@ import adt.Queue;
  * @param <T> the element type stored in the list.
  */
 public class CircularLinkedList<T> implements List<T>, Iterable<T>, Queue<T> {
+    /**
+     * Determine whether the queue is empty.
+     * @return true if the queue is empty.
+     */
     public boolean isEmpty() {
         return this.size == 0;
     }
+    /**
+     * Adds an item to the back of the queue.
+     * @param value to the enqueue.
+     */
     public void enqueue(T value) {
         insert(size, value);
     }
+    /**
+     * Remove and return the item in the front.
+     * @return removed value.
+     */
     public T dequeue() {
         assert !isEmpty();
         return delete(0);
     }
+    /**
+     * Views the item in the front, doesn't remove it.
+     * @return the front value.
+     */
     public T peek() {
         assert !isEmpty();
         return tail.link.data;
@@ -33,6 +47,9 @@ public class CircularLinkedList<T> implements List<T>, Iterable<T>, Queue<T> {
     private Node tail;
     private int size;
 
+    /**
+     * Intialize an empty circularlinkedlist.
+     */
     public CircularLinkedList() {
         this.tail = null;
         this.size = 0;
@@ -187,11 +204,16 @@ public class CircularLinkedList<T> implements List<T>, Iterable<T>, Queue<T> {
     }
 
     /**
-    * Node Structure
+    * A node in the circularlinkedlist.
     */
     private class Node {
         T data;
         Node link;
+        /**
+         * Creates the node.
+         * @param data the stored value.
+         * @param link the reference to the next node.
+         */
         Node(T data, Node link) {
             this.data = data;
             this.link = link;
