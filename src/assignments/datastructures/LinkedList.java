@@ -21,7 +21,7 @@ import adt.Stack;
 public class LinkedList<T> implements List<T>, Iterable<T>, Stack<T> {
     /**
      * Determines if the stack is empty.
-     * @returns true if the collection contains no elements.
+     * @return true if the collection contains no elements.
      */
     public boolean isEmpty() {
         return this.size == 0;
