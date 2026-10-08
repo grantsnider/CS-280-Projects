@@ -63,7 +63,7 @@ public class QuickSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
     /**
      * Run validation tests.
      * 
-     * @param args
+     * @param args the command-line arguments.
      */
     public static void main(String[] args) {
         SortingAlgorithm.validate(new QuickSort<Integer>());
