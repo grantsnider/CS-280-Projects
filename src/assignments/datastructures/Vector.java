@@ -18,16 +18,32 @@ import adt.Stack;
 /// 
 /// @param <T> the type of each element
 public class Vector<T> implements List<T>, Iterable<T>, Stack<T> {
+    /**    (non-Javadoc)
+     * Determines if the stack is empty.
+     * @return true if it contains no elements.
+     */
     public boolean isEmpty() {
         return this.size == 0;
     }
+    /**
+     * Pushes a value onto the top of the stack.
+     * @param value the value stored.
+     */
     public void push(T value) {
         insert(this.size, value);
     }
+    /**
+     * Removes the top value from the stack and returns it.
+     * @return the removed value.
+     */
     public T pop() {
         assert !isEmpty();
         return delete(this.size - 1);
     }
+    /**
+     * Views the top value, doesn't remove it.
+     * @return the top value.
+     */
     public T peek() {
         assert !isEmpty();
         return this.array[this.size - 1];
@@ -38,8 +54,9 @@ public class Vector<T> implements List<T>, Iterable<T>, Stack<T> {
     private T[] array;
     private int size;
 
-    /// Intialize the empty vector
-
+    /**
+     * Initialize the empty vector.
+     */
     @SuppressWarnings("unchecked")
     public Vector() {
         // Generic types (i.e. `T`) don't technically exist at runtime, so you have to allocate arrays generically and then cast them.

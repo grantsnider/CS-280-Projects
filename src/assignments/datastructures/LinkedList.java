@@ -19,16 +19,32 @@ import adt.Stack;
 /// 
 /// @param <T> the type of each element
 public class LinkedList<T> implements List<T>, Iterable<T>, Stack<T> {
+    /**
+     * Determines if the stack is empty.
+     * @returns true if the collection contains no elements.
+     */
     public boolean isEmpty() {
         return this.size == 0;
     }
+    /**
+     * Pushes the value onto the top of the stack.
+     * @param value the value to store.
+     */
     public void push(T value) {
         insert(0, value);
     }
+    /**
+     * Removes the top value of the stack and returns it.
+     * @return the removed value.
+     */
     public T pop() {
         assert !isEmpty();
         return delete(0);
     }
+    /**
+     * Views the top value without removing it.
+     * @return the top value.
+     */
     public T peek() {
         assert !isEmpty();
         return this.head.data;
