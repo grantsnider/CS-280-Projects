@@ -25,31 +25,6 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
     }
 
     /**
-     * Manually construct a tree so we can test iterator methods.
-     * 
-     * NOTE: You will remove this method once we've learned how to add.
-     * 
-     * @param demo a specific sequence of numbers defined in the main method
-     */
-    public void fillForDay1Tests(T[] demo) {
-        this.root = new Node(demo[0]);
-        this.root.left = new Node(demo[1]);
-        this.root.left.left = new Node(demo[2]);
-        this.root.left.right = new Node(demo[3]);
-        this.root.left.left.right = new Node(demo[4]);
-        this.root.left.right.left = new Node(demo[5]);
-        this.root.left.left.right.right = new Node(demo[6]);
-        this.root.right = new Node(demo[7]);
-        this.root.left.left.right.right.left = new Node(demo[8]);
-        this.root.left.right.right = new Node(demo[9]);
-        this.root.left.right.left.right = new Node(demo[10]);
-        this.root.left.right.left.left = new Node(demo[11]);
-        this.root.left.right.right.right = new Node(demo[12]);
-        this.root.left.right.left.right.right = new Node(demo[13]);
-        this.root.left.left.right.right.right = new Node(demo[14]);
-    }
-
-    /**
      * Compute the number of items in this tree.
      * @return the number of items
      */
@@ -189,6 +164,87 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
     // NOTE: You're going to add more public methods here on the second day of trees.
     
     /**
+     * Check whether the value exists in the tree.
+     * @param value the value being searched for.
+     * @return true if it is found.
+     */
+    public boolean contains(T value) {
+        return contains(root, value);
+    }
+    private boolean contains(Node root, T value) {
+        if (root == null) {
+            return false;
+        }
+        int compare = value.compareTo(root.data);
+        if (compare == 0) {
+            return true;
+        }
+        if (compare < 0) {
+            return contains(root.left, value);
+        }
+        
+        return contains(root.right, value);
+    }
+
+    /**
+     * Add an value to the tree.
+     * @param value the value to insert.
+     */
+    public void add(T value) {
+        root = add(root, value);
+    }
+    private Node add(Node root, T value) {
+        if (root == null) {
+            return new Node(value);
+        }
+        if (value.compareTo(root.data) < 0) {
+            root.left = add(root.left, value);
+        }
+        else {
+            root.right = add(root.right, value);
+        }
+        
+        return root;
+    }
+
+    /**
+     * Removes an value from the tree.
+     * @param value the value to remove.
+     */
+    public void remove(T value) {
+        root = remove(root, value);
+    }
+    private Node remove(Node root, T value) {
+        if (root == null) {
+            return null;
+        }
+        int compare = value.compareTo(root.data);
+        if (compare < 0) {
+            root.left = remove(root.left, value);
+        }
+        else if (compare > 0) {
+            root.right = remove(root.right, value);
+        }
+        else {
+            if (root.left == null) {
+                return root.right;
+            }
+            if (root.right == null) {
+                return root.left;
+            }
+            Node successful = root.right;
+            while (successful.left != null) {
+                successful = successful.left;
+            }
+
+            root.data = successful.data;
+            root.right = remove(root.right, successful.data);
+        }
+
+        return root;
+    }
+
+    /**
      * An encapsulation of a value with two pointers, suitable for a binary tree.
      */
     private class Node {
@@ -217,7 +273,9 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
         // Build a sample tree.
         Integer[] numbers = {4, -4, -6, 0, -6, -3, -5, 5, -6, 0, -3, -4, 3, -3, -5};
         BinarySearchTree<Integer> tree = new BinarySearchTree<>();
-        tree.fillForDay1Tests(numbers);     // NOTE: To be replaced once we learn how to add.
+        for (Integer number : numbers) {
+            tree.add(number);
+        }
 
         // Check structure.
         assert tree.length() == 15;

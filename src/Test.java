@@ -40,6 +40,7 @@ public class Test {
        assignments.datastructures.Vector.main(args);
        assignments.datastructures.LinkedList.main(args);
        assignments.datastructures.CircularLinkedList.main(args);
+       assignments.datastructures.BinarySearchTree.main(args);
         /* Call additional main routines as you create new data strutures. */
 
         return true;
