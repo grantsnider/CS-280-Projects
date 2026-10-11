@@ -41,6 +41,7 @@ public class Test {
        assignments.datastructures.LinkedList.main(args);
        assignments.datastructures.CircularLinkedList.main(args);
        assignments.datastructures.BinarySearchTree.main(args);
+       assignments.datastructures.AVLTree.main(args);
         /* Call additional main routines as you create new data strutures. */
 
         return true;
