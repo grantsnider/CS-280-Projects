@@ -34,6 +34,11 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
     public int length() {
         return length(root);
     }
+    /**
+     * Recursively counts the number of nodes in a subtree.
+     * @param root the root of the subtree.
+     * @return the number of nodes in the subtree.
+     */
     private int length(Node root) {
         if (root == null) {
             return 0;
@@ -48,6 +53,11 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
     public int degree() {
         return degree(root);
     }
+    /**
+     * Determines the max degree within the subtree.
+     * @param root the root of the subtree.
+     * @return the maximum degree found.
+     */
     private int degree(Node root) {
         if (root == null) {
             return 0;
@@ -70,6 +80,11 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
     public int height() {
         return height(root);
     }
+    /**
+     * Recursively computes the height of the subtree.
+     * @param root the root of the subtree.
+     * @return the height found in the subtree.
+     */
     private int height(Node root) {
         if (root == null) {
             return 0;
@@ -87,6 +102,11 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
         preorder(root, data);
         return data.iterator();
     }
+    /**
+     * Recursive function to perfrom the traversal.
+     * @param root the root of the subtree.
+     * @param data the traversal output data.
+     */
     private void preorder(Node root, Vector<T> data) {
         if (root == null) {
             return;
@@ -105,6 +125,11 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
         inorder(root, data);
         return data.iterator();
     }
+    /**
+     * Recursively finds the inorder traversal.
+     * @param root the root of the subtree.
+     * @param data the traversal output.
+     */
     private void inorder(Node root, Vector<T> data) {
         if (root == null) {
             return;
@@ -123,6 +148,11 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
         postorder(root, data);
         return data.iterator();
     }
+    /**
+     * Recursively performs the postorder traversal.
+     * @param root the root of the subtree.
+     * @param data receives the traversal output.
+     */
     private void postorder(Node root, Vector<T> data) {
         if (root == null) {
             return;
@@ -172,6 +202,12 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
     public boolean contains(T value) {
         return contains(root, value);
     }
+    /**
+     * Recurisvely searches for the value in the subtree.
+     * @param root the root of the subtree.
+     * @param value the value being searched for,
+     * @return the value if found, then is true.
+     */
     private boolean contains(Node root, T value) {
         if (root == null) {
             return false;
@@ -195,6 +231,12 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
     public void add(T value) {
         root = add(root, value);
     }
+    /**
+     * Recursively inserts a value into the subtree.
+     * @param root the root of the subtree.
+     * @param value the value being inserted.
+     * @return the subtree root being updated.
+     */
     private Node add(Node root, T value) {
         if (root == null) {
             return new Node(value);
@@ -217,6 +259,12 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
     public void remove(T value) {
         root = remove(root, value);
     }
+    /**
+     * Recusrively removes a value from the subtree.
+     * @param root the root of the subtree.
+     * @param value the value being removed.
+     * @return the updated subtree root.
+     */
     private Node remove(Node root, T value) {
         if (root == null) {
             return null;
@@ -286,20 +334,37 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
         assert tree.height() == 6;
 
         // Check add and the contain.
-        assert tree.contains(4);
-        assert tree.contains(-4);
+        assert tree.contains(4); assert tree.contains(-4);
         assert !tree.contains(10);
 
         // Check the remove.
         tree.remove(5);
 
         assert !tree.contains(5);
-        assert tree.contains(4);
-        assert tree.contains(-4);
+        assert tree.contains(4); assert tree.contains(-4);
         assert tree.length() == 14;
 
+        // Check remove (one child).
+        BinarySearchTree<Integer> oneChild = new BinarySearchTree<>();
+        oneChild.add(10); oneChild.add(5); oneChild.add(3);
+        oneChild.remove(5);
+        assert !oneChild.contains(5);
+        assert oneChild.contains(3);
+        assert oneChild.length() == 2;
+
+        // Check the remove (two children).
+        BinarySearchTree<Integer> twoChild = new BinarySearchTree<>();
+        twoChild.add(10); twoChild.add(5); twoChild.add(15);
+        twoChild.remove(10);
+        assert !twoChild.contains(10);
+        assert twoChild.contains(5); assert twoChild.contains(15);
+        assert twoChild.length() == 2;
+
         // Check traversals.
+        assert testTraversal(tree.preorder(),   new int[]{4, -4, -6, -6, -5, -6, -5, 0, -3, -4, -3, -3, 0, 3});
         assert testTraversal(tree.inorder(),    new int[]{-6, -6, -6, -5, -5, -4, -4, -3, -3, -3, 0, 0, 3, 4});
+        assert testTraversal(tree.postorder(),  new int[]{-6, -5, -5, -6, -6, -4, -3, -3, -3, 3, 0, 0, -4, 4});
+        assert testTraversal(tree.levelorder(), new int[]{4, -4, -6, 0, -6, -3, 0, -5, -4, -3, 3, -6, -5, -3});
         assert testTraversal(tree.iterator(),   new int[]{-6, -6, -6, -5, -5, -4, -4, -3, -3, -3, 0, 0, 3, 4});
 
         System.out.println("BinarySearchTree passes all tests.");
