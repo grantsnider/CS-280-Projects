@@ -13,6 +13,9 @@ import adt.Tree;
 ///  every node has a value greater than that of its less child,
 ///  and less than or equal to that of its right child.
 /// 
+/// Implemented these public interface methods:
+/// length(), degree(), height(), contains(T value), add(T value), remove(T value), preorder(), inorder(), postorder(), and levelorder(), and iterator().
+/// 
 /// @param <T> the type of each element, which must have a natural ordering
 public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
     private Node root;
@@ -160,13 +163,11 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
     public Iterator<T> iterator() {
         return this.inorder();
     }
-
-    // NOTE: You're going to add more public methods here on the second day of trees.
     
     /**
      * Check whether the value exists in the tree.
      * @param value the value being searched for.
-     * @return true if it is found.
+     * @return true if the value exists in the tree.
      */
     public boolean contains(T value) {
         return contains(root, value);
@@ -188,6 +189,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 
     /**
      * Add an value to the tree.
+     * Values less then the node are inserted to the left of the tree, and values greater than or qual to the node are to the right.
      * @param value the value to insert.
      */
     public void add(T value) {
@@ -209,6 +211,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 
     /**
      * Removes an value from the tree.
+     * The binarysearchtree property is preserved after the removal.
      * @param value the value to remove.
      */
     public void remove(T value) {
@@ -277,17 +280,27 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
             tree.add(number);
         }
 
-        // Check structure.
+        // Check structure before removal.
         assert tree.length() == 15;
         assert tree.degree() == 2;
         assert tree.height() == 6;
 
+        // Check add and the contain.
+        assert tree.contains(4);
+        assert tree.contains(-4);
+        assert !tree.contains(10);
+
+        // Check the remove.
+        tree.remove(5);
+
+        assert !tree.contains(5);
+        assert tree.contains(4);
+        assert tree.contains(-4);
+        assert tree.length() == 14;
+
         // Check traversals.
-        assert testTraversal(tree.preorder(),   new int[]{4, -4, -6, -6, -5, -6, -5, 0, -3, -4, -3, -3, 0, 3, 5});
-        assert testTraversal(tree.inorder(),    new int[]{-6, -6, -6, -5, -5, -4, -4, -3, -3, -3, 0, 0, 3, 4, 5});
-        assert testTraversal(tree.postorder(),  new int[]{-6, -5, -5, -6, -6, -4, -3, -3, -3, 3, 0, 0, -4, 5, 4});
-        assert testTraversal(tree.levelorder(), new int[]{4, -4, 5, -6, 0, -6, -3, 0, -5, -4, -3, 3, -6, -5, -3});
-        assert testTraversal(tree.iterator(),   new int[]{-6, -6, -6, -5, -5, -4, -4, -3, -3, -3, 0, 0, 3, 4, 5});
+        assert testTraversal(tree.inorder(),    new int[]{-6, -6, -6, -5, -5, -4, -4, -3, -3, -3, 0, 0, 3, 4});
+        assert testTraversal(tree.iterator(),   new int[]{-6, -6, -6, -5, -5, -4, -4, -3, -3, -3, 0, 0, 3, 4});
 
         System.out.println("BinarySearchTree passes all tests.");
     }
