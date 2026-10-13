@@ -6,7 +6,7 @@ import adt.PriorityQueue;
 
 /**
  * An PriorityDequeuer maintains a list in sorted order.
- * When dequeing, just pop off the last element.
+ * When dequeueing, just pop off the last element.
  * @param <T>
  */
 public class PriorityDequeuer<T extends Comparable<T>> implements PriorityQueue<T> {
@@ -59,6 +59,7 @@ public class PriorityDequeuer<T extends Comparable<T>> implements PriorityQueue<
     }
     /**
      * Remove and return the high-priority value.
+     * This operation executes within O(1) time.
      * @return removed value.
      */
     public T dequeue() {

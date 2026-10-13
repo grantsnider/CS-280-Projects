@@ -6,10 +6,10 @@ import adt.PriorityQueue;
 
 /**
  * An PriorityEnqueuer maintains a list in enqueue order.
- * When dequeing, it searches the whole lsit for the smallest number.
+ * When enqueueing, it searches the whole list for the smallest number.
  * @param <T>
  */
-public class PriorityEnqueuer<T> implements PriorityQueue<T> {
+public class PriorityEnqueuer<T extends Comparable<T>> implements PriorityQueue<T> {
     /**
      * Determine whether the queue is empty.
      * @return true if the queue is empty.
@@ -19,10 +19,21 @@ public class PriorityEnqueuer<T> implements PriorityQueue<T> {
     }
     /**
      * Adds an item to the back of the queue.
+     * This operation executes within O(1) time.
      * @param value to the enqueue.
      */
     public void enqueue(T value) {
-        insert(size, value);
+        Node newest = new Node(value, null);
+        if (tail == null) {
+            tail = newest;
+            tail.link = tail;
+        }
+        else {
+            newest.link = tail.link;
+            tail.link = newest;
+            tail = newest;
+        }
+        size++;
     }
     /**
      * Remove and return the item in the front.
@@ -30,7 +41,31 @@ public class PriorityEnqueuer<T> implements PriorityQueue<T> {
      */
     public T dequeue() {
         assert !isEmpty();
-        return delete(0);
+        Node minimumBefore = tail;
+        Node minimumNode = tail.link;
+
+        Node before = tail.link;
+        Node current = tail.link.link;
+        while (current != tail.link) {
+            if (current.data.compareTo(minimumNode.data) < 0) {
+                minimumNode = current;
+                minimumBefore = before;
+            }
+            before = current;
+            current = current.link;
+        }
+        T result = minimumNode.data;
+        if (size == 1) {
+            tail = null;
+        }
+        else {
+            minimumBefore.link = minimumNode.link;
+            if (minimumNode == tail) {
+                tail = minimumBefore;
+            }
+        }
+        size--;
+        return result;
     }
     /**
      * Views the item in the front, doesn't remove it.
@@ -38,7 +73,16 @@ public class PriorityEnqueuer<T> implements PriorityQueue<T> {
      */
     public T peek() {
         assert !isEmpty();
-        return tail.link.data;
+        Node current = tail.link;
+        T minimum = current.data;
+        current = current.link;
+        while (current != tail.link) {
+            if (current.data.compareTo(minimum) < 0) {
+                minimum = current.data;
+            }
+            current = current.link;
+        }
+        return minimum;
     }
     
     private Node tail;
@@ -76,8 +120,19 @@ public class PriorityEnqueuer<T> implements PriorityQueue<T> {
     public static void main(String[] args) {
         PriorityQueue.validate(new PriorityEnqueuer<>());
 
+        // Method tests.
         PriorityEnqueuer<Integer> p = new PriorityEnqueuer<>();
+        assert p.isEmpty();
+        p.enqueue(5); p.enqueue(10); p.enqueue(3);
+        assert !p.isEmpty();
+        assert p.peek() == 3;
+        assert p.dequeue() == 3;
+        assert p.peek() == 5;
+        assert p.dequeue() == 5; assert p.dequeue() == 10;
+
         System.out.println("PriorityEnqueuer passes all tests.");
 
     }
 }
+
+//java -cp lib/* -ea src/assignments/datastructures/PriorityEnqueuer.java
