@@ -20,7 +20,6 @@ public class PriorityDequeuer<T extends Comparable<T>> implements PriorityQueue<
     /**
      * Inserts a value into the priority queue.
      * @param value to the enqueue.
-     * @return returns the value.
      */
     public void enqueue(T value) {
         Node newest = new Node(value, null);
