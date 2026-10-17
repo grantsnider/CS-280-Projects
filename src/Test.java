@@ -44,6 +44,7 @@ public class Test {
        assignments.datastructures.AVLTree.main(args);
        assignments.datastructures.PriorityDequeuer.main(args);
        assignments.datastructures.PriorityEnqueuer.main(args);
+       assignments.datastructures.MinHeap.main(args);
         /* Call additional main routines as you create new data strutures. */
 
         return true;
