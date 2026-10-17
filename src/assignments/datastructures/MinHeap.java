@@ -1,19 +1,23 @@
 package assignments.datastructures;
 
 import java.util.Vector;
+import java.util.Iterator;
 
 import adt.PriorityQueue;
+import adt.Tree;
 /**
- * MinHeap implements the
+ * MinHeap stores values in Vector and keeps the smallest value by the root.
+ * Added new values to maintain balance, and the parent must be less than or equal to its children.
  * @param <T>
  */
-public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T> {
+public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<T> {
     /**
      * Initilize an empty MinHeap.
      */
     public MinHeap() {
         heap = new Vector<>();
     }
+    // The PriorityQueue Methods.
     /**
      * Determines whether the heap has values.
      *@return true if the heap is empty.
@@ -84,8 +88,102 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T> {
 
         return min;
     }
+    // The Tree Methods.
     /**
-     * Storage for the binary search tree heap.
+     * Computes the values in the heap.
+     * @return the number of values.
+     */
+    public int length() {
+        return heap.size();
+    }
+    /**
+     * Computes maximum degree for the heap.
+     * @return the maximum degree.
+     */
+    public int degree() {
+        if (heap.isEmpty()) {
+            return 0;
+        }
+        if (heap.size() == 1) {
+            return 0;
+        }
+        if (heap.size() == 2) {
+            return 1;
+        }
+        return 2;
+    }
+    /**
+     * Computes the height of the heap.
+     * @return the heap height.
+     */
+    public int height() {
+        if (heap.isEmpty()) {
+            return 0;
+        }
+        int count = heap.size();
+        int height = 0;
+        while (count > 0) {
+            count /= 2;
+            height++;
+        }
+        return height;
+    }
+    /**
+     * Performs levelorder traversal, the top to bottom.
+     * @return a iterator.
+     */
+    public Iterator<T> levelorder() {
+        Vector<T> traversal = new Vector<>();
+        for (T value : heap) {
+            traversal.add(value);
+        }
+        return traversal.iterator();
+    }
+    /**
+     * Iterates using inorder traversal through the heap.
+     * @return returns an iterator.
+     */
+    public Iterator<T> iterator() {
+        return inorder();
+    }
+    /**
+     * Performs preorder traversal through the heap.
+     * Visited root-left-right.
+     * @return returns the traversal.
+     */
+    public Iterator<T> preorder() {
+        Vector<T> traversal = new Vector<>();
+        for (T value : heap) {
+            traversal.add(value);
+        }
+        return traversal.iterator();
+    }
+    /**
+     * Performs postorder traversal through the heap.
+     * Visited left-right-root.
+     * @return returns the traversal.
+     */
+    public Iterator<T> postorder() {
+        Vector<T> traversal = new Vector<>();
+        for (T value : heap) {
+            traversal.add(value);
+        }
+        return traversal.iterator();
+    }
+    /**
+     * Performs an inorder traversal through the heap.
+     * Visited left-root-right order.
+     * @return returns the traversal.
+     */
+    public Iterator<T> inorder() {
+        Vector<T> traversal = new Vector<>();
+        for (T value : heap) {
+            traversal.add(value);
+        }
+        return traversal.iterator();
+    }
+    /**
+     * Storage for the heap.
      */
     private Vector<T> heap;
     /**
@@ -94,11 +192,15 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T> {
     */
     public static void main(String[] args) {
         PriorityQueue.validate(new MinHeap<>());
+        Tree.validate(new MinHeap<>());
 
         // Method tests.
         MinHeap<Integer> heap = new MinHeap<>();
         assert heap.isEmpty();
         heap.enqueue(6); heap.enqueue(3); heap.enqueue(12);
+        assert heap.length() == 3;
+        assert heap.degree() == 2;
+        assert heap.height() == 2;
         assert heap.peek() == 3;
         assert heap.dequeue() == 3;
         assert heap.peek() == 6;
