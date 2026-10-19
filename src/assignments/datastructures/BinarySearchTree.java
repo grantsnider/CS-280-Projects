@@ -227,9 +227,11 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
      * Add an value to the tree.
      * Values less then the node are inserted to the left of the tree, and values greater than or qual to the node are to the right.
      * @param value the value to insert.
+     * @return true if the tree is modified.
      */
-    public void add(T value) {
+    public boolean add(T value) {
         root = add(root, value);
+        return true;
     }
     /**
      * Recursively inserts a value into the subtree.
@@ -255,9 +257,14 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
      * Removes an value from the tree.
      * The binarysearchtree property is preserved after the removal.
      * @param value the value to remove.
+     * @return true if the tree is modified.
      */
-    public void remove(T value) {
+    public boolean remove(T value) {
+        if (!contains(value)) {
+            return false;
+        }
         root = remove(root, value);
+        return true;
     }
     /**
      * Recusrively removes a value from the subtree.
@@ -325,7 +332,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
         Integer[] numbers = {4, -4, -6, 0, -6, -3, -5, 5, -6, 0, -3, -4, 3, -3, -5};
         BinarySearchTree<Integer> tree = new BinarySearchTree<>();
         for (Integer number : numbers) {
-            tree.add(number);
+            assert tree.add(number);
         }
 
         // Check structure before removal.
@@ -338,7 +345,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
         assert !tree.contains(10);
 
         // Check the remove.
-        tree.remove(5);
+        assert tree.remove(5);
 
         assert !tree.contains(5);
         assert tree.contains(4); assert tree.contains(-4);
@@ -347,7 +354,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
         // Check remove (one child).
         BinarySearchTree<Integer> oneChild = new BinarySearchTree<>();
         oneChild.add(10); oneChild.add(5); oneChild.add(3);
-        oneChild.remove(5);
+        assert oneChild.remove(5);
         assert !oneChild.contains(5);
         assert oneChild.contains(3);
         assert oneChild.length() == 2;
@@ -355,7 +362,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
         // Check the remove (two children).
         BinarySearchTree<Integer> twoChild = new BinarySearchTree<>();
         twoChild.add(10); twoChild.add(5); twoChild.add(15);
-        twoChild.remove(10);
+        assert twoChild.remove(10);
         assert !twoChild.contains(10);
         assert twoChild.contains(5); assert twoChild.contains(15);
         assert twoChild.length() == 2;
