@@ -2,6 +2,7 @@ package assignments.datastructures;
 
 import java.util.Vector;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import adt.PriorityQueue;
 import adt.Tree;
@@ -153,8 +154,23 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
      */
     public Iterator<T> preorder() {
         Vector<T> traversal = new Vector<>();
-        for (T value : heap) {
-            traversal.add(value);
+        LinkedList<Integer> pending = new LinkedList<>();
+        if (heap.isEmpty()) {
+            return traversal.iterator();
+        }
+        pending.add(0);
+        while (!pending.isEmpty()) {
+            int current = pending.pop();
+            traversal.add(heap.get(current));
+            int left = 2 * current + 1;
+            int right = 2 * current + 2;
+            if (right < heap.size()) {
+                pending.push(right);
+            }
+            if (left < heap.size()) {
+                pending.push(left);
+            }
+
         }
         return traversal.iterator();
     }
@@ -165,10 +181,28 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
      */
     public Iterator<T> postorder() {
         Vector<T> traversal = new Vector<>();
-        for (T value : heap) {
-            traversal.add(value);
+        Vector<T> reversed = new Vector<>();
+        if (heap.isEmpty()) {
+            return traversal.iterator();
+        }       
+        LinkedList<Integer> pending = new LinkedList<>();
+        pending.push(0);
+        while (!pending.isEmpty()) {
+            int current = pending.pop();
+            traversal.add(heap.get(current));
+            int right = 2 * current + 2;
+            int left = 2 * current + 1;
+            if (left < heap.size()) {
+                pending.push(left);
+            }
+            if (right < heap.size()) {
+                pending.push(right);
+            }
         }
-        return traversal.iterator();
+        for (int i = traversal.size() - 1; i >= 0; i--) {
+            reversed.add(traversal.get(i));
+        }
+        return reversed.iterator();
     }
     /**
      * Performs an inorder traversal through the heap.
@@ -177,8 +211,16 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
      */
     public Iterator<T> inorder() {
         Vector<T> traversal = new Vector<>();
-        for (T value : heap) {
-            traversal.add(value);
+        LinkedList<Integer> pending = new LinkedList<>();
+        int current = 0;
+        while (!pending.isEmpty() || current < heap.size()) {
+            while (current < heap.size()) {
+                pending.push(current);
+                current = 2 * current + 1;
+            }
+            current = pending.pop();
+            traversal.add(heap.get(current));
+            current = 2 * current + 2;
         }
         return traversal.iterator();
     }
@@ -194,18 +236,34 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
         PriorityQueue.validate(new MinHeap<>());
         Tree.validate(new MinHeap<>());
 
-        // Method tests.
+        // Basic Method tests.
         MinHeap<Integer> heap = new MinHeap<>();
         assert heap.isEmpty();
-        heap.enqueue(6); heap.enqueue(3); heap.enqueue(12);
-        assert heap.length() == 3;
-        assert heap.degree() == 2;
-        assert heap.height() == 2;
+        assert heap.length() == 0;
+        heap.enqueue(4); heap.enqueue(2); heap.enqueue(6); heap.enqueue(1); heap.enqueue(3);
+        assert heap.peek() == 1;
+        assert heap.length() == 5;
+        assert !heap.isEmpty();
+        assert heap.dequeue() == 1;
+        assert heap.dequeue() == 2;
         assert heap.peek() == 3;
-        assert heap.dequeue() == 3;
-        assert heap.peek() == 6;
-        assert heap.dequeue() == 6; assert heap.dequeue() == 12;
+        assert heap.length() == 3;
+        heap.enqueue(-1);
+        assert heap.peek() == -1;
+        assert heap.dequeue() == -1; assert heap.dequeue() == 3; assert heap.dequeue() == 4; assert heap.dequeue() == 6;
         assert heap.isEmpty();
+
+        //Traversal Method tests.
+        MinHeap<Integer> tree = new MinHeap<>();
+        tree.enqueue(4); tree.enqueue(2); tree.enqueue(6); tree.enqueue(1); tree.enqueue(3); tree.enqueue(5); tree.enqueue(7);
+        Iterator<Integer> order = tree.preorder();
+        assert order.next() == 1; assert order.next() == 2; assert order.next() == 4;
+        order = tree.inorder();
+        assert order.next() == 4; assert order.next() == 2; assert order.next() == 3;
+        order = tree.postorder();
+        assert order.next() == 4; assert order.next() == 3; assert order.next() == 2;
+        order = tree.levelorder();
+        assert order.next() == 1; assert order.next() == 2; assert order.next() == 5;
 
         System.out.println("MinHeap passes all tests.");
     }
