@@ -33,6 +33,8 @@ public class Test {
         assignments.sorting.SelectionSort.main(args);
         assignments.sorting.QuickSort.main(args);
         assignments.sorting.MergeSort.main(args);
+        assignments.sorting.TreeSort.main(args);
+        assignments.sorting.HeapSort.main(args);
         /* Call additional main routines here as you create new sorting algorithms. */
     
         // Test data structures.
