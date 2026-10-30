@@ -35,6 +35,9 @@ public class Test {
         assignments.sorting.MergeSort.main(args);
         assignments.sorting.TreeSort.main(args);
         assignments.sorting.HeapSort.main(args);
+        assignments.sorting.BucketSort.main(args);
+        assignments.sorting.ShellSort.main(args);
+        assignments.sorting.RadixSort.main(args);
         /* Call additional main routines here as you create new sorting algorithms. */
     
         // Test data structures.
