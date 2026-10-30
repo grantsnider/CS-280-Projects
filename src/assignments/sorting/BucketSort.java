@@ -8,14 +8,43 @@ public class BucketSort extends SortingAlgorithm<Integer> {
 
     /**
      * Sorts an array in-place using bucket sort.
+     * Counts the number of occurences of each value, then puts them back into the array sorted.
+     * @param array the values to sort.
      */
+    public void sort(Integer[] array) {
+        if (array.length == 0) {
+            return;
+        }
+        int min = array[0];
+        int max = array[0];
+        for (int value : array) {
+            if (value > max) {
+                max = value;
+            }
+            if (value < min) {
+                min = value;
+            }
+        }
+        int[] buckets = new int[max - min + 1];
+        for (int value : array) {
+            buckets[value - min]++;
+        }
+        int index = 0;
+        for (int value = 0; value < buckets.length; value++) {
+            while (buckets[value] > 0) {
+                array[index] = value + min;
+                index++;
+                buckets[value]--;
+            }
+        }
+    }
 
     /**
     * Run validation tests.
     * @param args command-line args.
     */
     public static void main(String[] args) {
-        SortingAlgorithm.validate(new BucketSort<Integer>());
+        SortingAlgorithm.validate(new BucketSort());
 
         System.out.println("BucketSort passes all tests.");
     }
