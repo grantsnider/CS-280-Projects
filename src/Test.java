@@ -52,6 +52,7 @@ public class Test {
        assignments.datastructures.MinHeap.main(args);
        assignments.datastructures.VectorSet.main(args);
        assignments.datastructures.TreeSet.main(args);
+       assignments.datastructures.HashSet.main(args);
         /* Call additional main routines as you create new data strutures. */
 
         return true;
