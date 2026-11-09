@@ -8,52 +8,113 @@ import adt.Set;
 * HashSet is an function that takes an obkect, and spits out an integer. It is intrinsically unordered, and all the items are unique.
 */
 public class HashSet<T extends Comparable<T>> implements Set<T> {
-    private Vector<T> [] hash;
-    private int N; // The number of buckets, in our array/
-    private int M; // The number of items in our hash set.
-    private int D; // The maximum number of items in any one bucket.
+    private Vector<T>[] hash; // Storage for the hash table buckets.
+    private int N; // The number of buckets in the hash table.
+    private int M; // The number of values stored in the set.
+    private int D; // Maximum bucket size.
 
     /**
-    * Creates an iterator to go throughout the hash.
-    * @return the hash iterated.
+    * Initialize an empty HashSet.
+    */
+    public HashSet() {
+        N = 10; M = 0; D = 5;
+        hash = (Vector<T>[]) new Vector[N];
+        for (int i = 0; i < hash.length; i++) {
+            hash[i] = new Vector<>();
+        }
+    }
+
+    /**
+    * Computes a bucket index for a given value.
+    * @param value the value being hashed.
+    * @param buckets the number of buckets.
+    * @return a bucket index.
+     */
+    private int hash(T value, int buckets) {
+        return Math.abs(value.hashCode()) % buckets;
+    }
+
+    private void rehash() {
+        Vector<T>[] previous = hash;
+        hash = (Vector<T>[]) new Vector[previous.length * 2];
+        for (int i = 0; i < hash.length; i++) {
+            hash[i] = new Vector<>();
+        }
+        for (Vector<T> bucket : previous) {
+            for (T value : bucket) {
+                int index = hash(value, hash.length);
+                hash[index].push(value);
+            }
+        }
+    }
+
+    /**
+    * Creates an iterator to visit the values.
+    * @return the iterator over the values.
     */
     public Iterator<T> iterator() {
-    
+        Vector<T> traversal = new Vector<>();
+        for (int i = 0; i < hash.length; i++) {
+            for (int j = 0; j < hash[i].length(); j++) {
+                traversal.insert(traversal.length(), hash[i].at(j));
+            }
+        }
+        return traversal.iterator();
     }
 
     /**
-    * Adds an item in the form of an object to the hash.
-    * @param object the object to add to the hash.
-    * @return true if the hash is added.
+    * Add an item to the set.
+    * @param value the value to add.
+    * @return true iff the set changed.
     */
-    public boolean add(T object) {
-    
+    public boolean add(T value) {
+        if (contains(value)) {
+            return false;
+        }
+        int bucket = hash(value, hash.length);
+
+        if (hash[bucket].length() > D) {
+            rehash();
+            bucket = hash(value, hash.length);
+        }
+        hash[bucket].push(value);
+        M++;
+        return true;
     }
 
     /**
-    * Checks if the object is within the hash.
-    * @param object the object to look for.
-    * @return the object.
+    * Check if the collection contains a given value.
+    * @param value the value to look for.
+    * @return true iff the collection contains value.
     */
-    public boolean contains(T object) {
-    
+    public boolean contains(T value) {
+        int bucket = hash(value, hash.length);
+        return hash[bucket].contains(value);
     }
 
     /**
-    * Computes the number of objects in the hash.
-    * @return the number of objects.
+    * Compute the number of items in this collection.
+    * @return the number of items.
     */
     public int length() {
-
+        return M;
     }
 
     /**
-    * Removes an object from the hash.
-    * @param object the object to remove.
-    * @return true if the hash had changed.
+    * Remove an item from the set.
+    * @param value the value to remove.
+    * @return true iff the set changed.
     */
     public boolean remove(T value) {
-    
+        int bucket = hash(value, hash.length);
+        for (int i = 0; i < hash[bucket].length(); i++) {
+            if (hash[bucket].at(i).equals(value)) {
+                hash[bucket].delete(i);
+                M--;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -63,6 +124,14 @@ public class HashSet<T extends Comparable<T>> implements Set<T> {
     public static void main(String[] args) {
         Set.validate(new HashSet<>());
 
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = 0; i < 100; i++) {
+            set.add(i);
+        }
+        for (int i = 0; i < 100; i++) {
+            assert set.contains(i);
+        }
+        assert set.length() == 100;
         System.out.println("HashSet passes all tests.");
     }
 }
