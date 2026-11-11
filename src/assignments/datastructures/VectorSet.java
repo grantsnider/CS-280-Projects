@@ -7,7 +7,7 @@ import adt.Set;
 /**
 * VectorSet is the data structure representing a mathematical set. The set is intrisically unordered, and the items are unique.
 */
-public class VectorSet<T extends Comparable<T>> implements Set<T> {
+public class VectorSet<T> implements Set<T> {
     private Vector<T> vector;
 
     public VectorSet() {
