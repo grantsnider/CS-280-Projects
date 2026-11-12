@@ -7,18 +7,18 @@ import adt.Set;
 /**
 * HashSet is an function that takes an obkect, and spits out an integer. It is intrinsically unordered, and all the items are unique.
 */
-public class HashSet<T extends Comparable<T>> implements Set<T> {
+public class HashSet<T> implements Set<T> {
     private Vector<T>[] hash; // Storage for the hash table buckets.
-    private int N; // The number of buckets in the hash table.
-    private int M; // The number of values stored in the set.
-    private int D; // Maximum bucket size.
+    private int M; // The number of buckets in the hash table.
+    private int N; // The number of values stored in the set.
+    private static final int D = 5; // Maximum bucket size.
 
     /**
     * Initialize an empty HashSet.
     */
     public HashSet() {
-        N = 10; M = 0; D = 5;
-        hash = (Vector<T>[]) new Vector[N];
+        M = 10; N = 0;
+        hash = (Vector<T>[]) new Vector[M];
         for (int i = 0; i < hash.length; i++) {
             hash[i] = new Vector<>();
         }
@@ -34,6 +34,10 @@ public class HashSet<T extends Comparable<T>> implements Set<T> {
         return Math.abs(value.hashCode()) % buckets;
     }
 
+    /**
+     * Rebuilds the hash table using twice as many buckets, then inserts the values.
+     * 
+     */
     private void rehash() {
         Vector<T>[] previous = hash;
         hash = (Vector<T>[]) new Vector[previous.length * 2];
@@ -73,12 +77,12 @@ public class HashSet<T extends Comparable<T>> implements Set<T> {
         }
         int bucket = hash(value, hash.length);
 
-        if (hash[bucket].length() > D) {
+        if (hash[bucket].length() >= D) {
             rehash();
             bucket = hash(value, hash.length);
         }
         hash[bucket].push(value);
-        M++;
+        N++;
         return true;
     }
 
@@ -97,7 +101,7 @@ public class HashSet<T extends Comparable<T>> implements Set<T> {
     * @return the number of items.
     */
     public int length() {
-        return M;
+        return N;
     }
 
     /**
@@ -110,7 +114,7 @@ public class HashSet<T extends Comparable<T>> implements Set<T> {
         for (int i = 0; i < hash[bucket].length(); i++) {
             if (hash[bucket].at(i).equals(value)) {
                 hash[bucket].delete(i);
-                M--;
+                N--;
                 return true;
             }
         }
