@@ -1,8 +1,6 @@
 package assignments.datastructures;
 
-import java.util.Vector;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import adt.PriorityQueue;
 import adt.Tree;
@@ -33,7 +31,7 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
      */
     public T peek() {
         assert !isEmpty();
-        return heap.get(0);
+        return heap.at(0);
     }
     /**
      * Inserts an value into the heap.
@@ -41,15 +39,15 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
      * @param value the value being added.
      */
     public void enqueue(T value) {
-        heap.add(value);
-        int child = heap.size() - 1;
+        heap.push(value);
+        int child = heap.length() - 1;
         while (child > 0) {
             int parent = (child - 1) / 2;
-            if (heap.get(child).compareTo(heap.get(parent)) >= 0) {
+            if (heap.at(child).compareTo(heap.at(parent)) >= 0) {
                 break;
             }
-            T temp = heap.get(child);
-            heap.set(child, heap.get(parent));
+            T temp = heap.at(child);
+            heap.set(child, heap.at(parent));
             heap.set(parent, temp);
             child = parent;
         }
@@ -61,8 +59,8 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
      */
     public T dequeue() {
         assert !isEmpty();
-        T min = heap.get(0);
-        T last = heap.remove(heap.size() - 1);
+        T min = heap.at(0);
+        T last = heap.delete(heap.length() - 1);
         if (heap.isEmpty()) {
             return min;
         }
@@ -72,17 +70,17 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
             int left = 2 * parent + 1;
             int right = 2 * parent + 2;
             int small = parent;
-            if (left < heap.size() && heap.get(left).compareTo(heap.get(small)) < 0) {
+            if (left < heap.length() && heap.at(left).compareTo(heap.at(small)) < 0) {
                 small = left;
             }
-            if (right < heap.size() && heap.get(right).compareTo(heap.get(small)) < 0) {
+            if (right < heap.length() && heap.at(right).compareTo(heap.at(small)) < 0) {
                 small = right;
             }
             if (small == parent) {
                 break;
             }
-            T temp = heap.get(parent);
-            heap.set(parent, heap.get(small));
+            T temp = heap.at(parent);
+            heap.set(parent, heap.at(small));
             heap.set(small, temp);
             parent = small;
         }
@@ -95,7 +93,7 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
      * @return the number of values.
      */
     public int length() {
-        return heap.size();
+        return heap.length();
     }
     /**
      * Computes maximum degree for the heap.
@@ -105,10 +103,10 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
         if (heap.isEmpty()) {
             return 0;
         }
-        if (heap.size() == 1) {
+        if (heap.length() == 1) {
             return 0;
         }
-        if (heap.size() == 2) {
+        if (heap.length() == 2) {
             return 1;
         }
         return 2;
@@ -121,7 +119,7 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
         if (heap.isEmpty()) {
             return 0;
         }
-        int count = heap.size();
+        int count = heap.length();
         int height = 0;
         while (count > 0) {
             count /= 2;
@@ -136,7 +134,7 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
     public Iterator<T> levelorder() {
         Vector<T> traversal = new Vector<>();
         for (T value : heap) {
-            traversal.add(value);
+            traversal.push(value);
         }
         return traversal.iterator();
     }
@@ -154,20 +152,20 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
      */
     public Iterator<T> preorder() {
         Vector<T> traversal = new Vector<>();
-        LinkedList<Integer> pending = new LinkedList<>();
+        Vector<Integer> pending = new Vector<>();
         if (heap.isEmpty()) {
             return traversal.iterator();
         }
-        pending.add(0);
+        pending.push(0);
         while (!pending.isEmpty()) {
             int current = pending.pop();
-            traversal.add(heap.get(current));
+            traversal.push(heap.at(current));
             int left = 2 * current + 1;
             int right = 2 * current + 2;
-            if (right < heap.size()) {
+            if (right < heap.length()) {
                 pending.push(right);
             }
-            if (left < heap.size()) {
+            if (left < heap.length()) {
                 pending.push(left);
             }
 
@@ -185,22 +183,22 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
         if (heap.isEmpty()) {
             return traversal.iterator();
         }       
-        LinkedList<Integer> pending = new LinkedList<>();
+        Vector<Integer> pending = new Vector<>();
         pending.push(0);
         while (!pending.isEmpty()) {
             int current = pending.pop();
-            traversal.add(heap.get(current));
+            traversal.push(heap.at(current));
             int right = 2 * current + 2;
             int left = 2 * current + 1;
-            if (left < heap.size()) {
+            if (left < heap.length()) {
                 pending.push(left);
             }
-            if (right < heap.size()) {
+            if (right < heap.length()) {
                 pending.push(right);
             }
         }
-        for (int i = traversal.size() - 1; i >= 0; i--) {
-            reversed.add(traversal.get(i));
+        for (int i = traversal.length() - 1; i >= 0; i--) {
+            reversed.push(traversal.at(i));
         }
         return reversed.iterator();
     }
@@ -211,15 +209,15 @@ public class MinHeap<T extends Comparable<T>> implements PriorityQueue<T>, Tree<
      */
     public Iterator<T> inorder() {
         Vector<T> traversal = new Vector<>();
-        LinkedList<Integer> pending = new LinkedList<>();
+        Vector<Integer> pending = new Vector<>();
         int current = 0;
-        while (!pending.isEmpty() || current < heap.size()) {
-            while (current < heap.size()) {
+        while (!pending.isEmpty() || current < heap.length()) {
+            while (current < heap.length()) {
                 pending.push(current);
                 current = 2 * current + 1;
             }
             current = pending.pop();
-            traversal.add(heap.get(current));
+            traversal.push(heap.at(current));
             current = 2 * current + 2;
         }
         return traversal.iterator();
