@@ -53,6 +53,7 @@ public class Test {
        assignments.datastructures.VectorSet.main(args);
        assignments.datastructures.TreeSet.main(args);
        assignments.datastructures.HashSet.main(args);
+       assignments.datastructures.HashMap.main(args);
         /* Call additional main routines as you create new data strutures. */
 
         return true;
