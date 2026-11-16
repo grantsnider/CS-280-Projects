@@ -21,7 +21,7 @@ public class ERASearching {
             hash.add(value);
         }
         long begin = System.nanoTime();
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 50000000; i++) {
             hash.contains(n + 1);
         }
         return System.nanoTime() - begin;
@@ -39,7 +39,7 @@ public class ERASearching {
             tree.add(value);
         }
         long begin = System.nanoTime();
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 50000000; i++) {
             tree.contains(n + 1);
         }
         return System.nanoTime() - begin;
@@ -88,8 +88,11 @@ public class ERASearching {
     */
     public static void main(String[] args) {
         System.out.println("N, HashSet, TreeSet, VectorSet");
-        for (int n = 1000; n <= 4096000; n *= 2) {
-            System.out.println(n + ", " + timeHashSet(n) + ", " + timeTreeSet(n) + "," + timeVectorSet(n));
+        for (int n = 1000; n <= 8192000; n *= 2) {
+            System.out.println(n + "," + timeHashSet(n) + "," + timeTreeSet(n));
+        }
+        for (int n = 1000; n <= 100000; n += 2000) {
+            System.out.println(n + "," + timeVectorSet(n));
         }
     }
 
