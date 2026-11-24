@@ -54,6 +54,9 @@ public class Test {
        assignments.datastructures.TreeSet.main(args);
        assignments.datastructures.HashSet.main(args);
        assignments.datastructures.HashMap.main(args);
+       
+       // Test algorithms.
+       assignments.algorithms.GraphRepresentations.main(args);
         /* Call additional main routines as you create new data strutures. */
 
         return true;
