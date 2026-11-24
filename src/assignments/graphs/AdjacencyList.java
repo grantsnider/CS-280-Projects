@@ -57,7 +57,7 @@ public class AdjacencyList {
      * 
      * Each vertex is represented by an integer.
      * 
-     * @return Set<Integer>
+     * @return the set of vertices.
      */
     public Set<Integer> getVertices() {
         Set<Integer> vertices = new HashSet<>();
@@ -69,7 +69,7 @@ public class AdjacencyList {
 
     /**
      * Return a set of Edges in this graph.
-     * @return Set<Edge>
+     * @return the set of edges.
      */
     public Set<Edge> getEdges() {
         Set<Edge> result = new HashSet<>();
